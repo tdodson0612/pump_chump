@@ -1,4 +1,4 @@
-package com.example.pump_chump
+package com.tdodson.pumpchump
 
 import io.flutter.embedding.android.FlutterActivity
 

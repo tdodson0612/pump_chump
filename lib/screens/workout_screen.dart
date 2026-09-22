@@ -8,6 +8,7 @@ import '../models/exercise.dart';
 import '../models/workout_day.dart';
 import '../models/workout_session.dart';
 import '../services/app_state.dart';
+import '../widgets/exercise_image_view.dart';
 import 'reward_screen.dart';
 
 /// Walks through today's exercises one at a time:
@@ -217,7 +218,9 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                           textAlign: TextAlign.center,
                           style: theme.textTheme.bodyMedium,
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 12),
+                        ExerciseImageView(exercise: exercise, height: 150),
+                        const SizedBox(height: 4),
                         Card(
                           child: ExpansionTile(
                             key: ValueKey(exercise.id),

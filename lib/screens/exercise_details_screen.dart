@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../models/exercise.dart';
 import '../services/app_state.dart';
+import '../widgets/exercise_image_view.dart';
 
 /// Everything about one exercise: how to do it, what it trains,
 /// your current goal, and your personal best.
@@ -40,7 +41,9 @@ class ExerciseDetailsScreen extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
+          ExerciseImageView(exercise: exercise),
+          const SizedBox(height: 12),
           Row(
             children: [
               Expanded(

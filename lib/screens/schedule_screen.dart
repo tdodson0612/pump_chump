@@ -49,6 +49,24 @@ class ScheduleScreen extends StatelessWidget {
               onChanged: (value) =>
                   _toggleDay(state, reminder, day.weekday, value ?? false),
             ),
+          if (reminder.enabled && reminder.weekdays.isEmpty)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
+              child: Row(
+                children: [
+                  Icon(Icons.error_outline, color: theme.colorScheme.error, size: 20),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Pick at least one day, or reminders will not fire.',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.error,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.edit_outlined),

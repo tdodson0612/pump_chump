@@ -269,6 +269,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                           controller: _controller,
                           step: step,
                           onStep: _step,
+                          unit: exercise.unit,
                         ),
                       ],
                     ),
@@ -297,11 +298,13 @@ class _RepStepper extends StatelessWidget {
     required this.controller,
     required this.step,
     required this.onStep,
+    required this.unit,
   });
 
   final TextEditingController controller;
   final int step;
   final void Function(int delta) onStep;
+  final String unit;
 
   @override
   Widget build(BuildContext context) {
@@ -310,22 +313,31 @@ class _RepStepper extends StatelessWidget {
       children: [
         IconButton.filledTonal(
           iconSize: 32,
+          tooltip: 'Decrease by $step $unit',
           onPressed: () => onStep(-step),
           icon: const Icon(Icons.remove),
         ),
         SizedBox(
           width: 130,
-          child: TextField(
-            controller: controller,
-            textAlign: TextAlign.center,
-            keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            style: const TextStyle(fontSize: 48, fontWeight: FontWeight.w900),
-            decoration: const InputDecoration(border: InputBorder.none),
+          child: Semantics(
+            label: 'How many $unit you did',
+            child: TextField(
+              controller: controller,
+              textAlign: TextAlign.center,
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              maxLength: 3,
+              style: const TextStyle(fontSize: 48, fontWeight: FontWeight.w900),
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                counterText: '',
+              ),
+            ),
           ),
         ),
         IconButton.filledTonal(
           iconSize: 32,
+          tooltip: 'Increase by $step $unit',
           onPressed: () => onStep(step),
           icon: const Icon(Icons.add),
         ),

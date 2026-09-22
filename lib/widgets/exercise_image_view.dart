@@ -2,9 +2,11 @@
 
 import 'package:flutter/material.dart';
 
+import '../data/exercise_image_captions.dart';
 import '../models/exercise.dart';
 
-/// A picture of the exercise, loaded from `assets/exercises/<id>.png`.
+/// A picture of the exercise, loaded from `assets/exercises/<id>.png`, with
+/// a short caption underneath explaining what the picture shows.
 ///
 /// If an image is ever missing for some exercise id, this shows a plain
 /// placeholder instead of crashing.
@@ -20,25 +22,43 @@ class ExerciseImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final caption = imageCaptionFor(exercise.id);
+
     return Card(
       clipBehavior: Clip.antiAlias,
-      child: SizedBox(
-        height: height,
-        width: double.infinity,
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Image.asset(
-            'assets/exercises/${exercise.id}.png',
-            fit: BoxFit.contain,
-            errorBuilder: (context, error, stackTrace) => Center(
-              child: Icon(
-                Icons.fitness_center,
-                size: 48,
-                color: scheme.outline,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(12, 12, 12, 10),
+        child: Column(
+          children: [
+            SizedBox(
+              height: height,
+              width: double.infinity,
+              child: Image.asset(
+                'assets/exercises/${exercise.id}.png',
+                fit: BoxFit.contain,
+                semanticLabel: 'Diagram showing how to do the ${exercise.name}',
+                errorBuilder: (context, error, stackTrace) => Center(
+                  child: Icon(
+                    Icons.fitness_center,
+                    size: 48,
+                    color: scheme.outline,
+                  ),
+                ),
               ),
             ),
-          ),
+            if (caption != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                caption,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: scheme.onSurfaceVariant,
+                ),
+              ),
+            ],
+          ],
         ),
       ),
     );
